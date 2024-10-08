@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Lista de Compras</h1>
+  
+    <form (ngSubmit)="adicionarItem()" #formListaCompras="ngForm">
+      <div class="input-group">
+        <input 
+          type="text" 
+          [(ngModel)]="novoItem" 
+          name="novoItem" 
+          placeholder="Adicione um novo item..." 
+          required 
+          [ngClass]="{ 'is-invalid': formListaCompras.submitted && !novoItem }" 
+        />
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+      </div>
+      <div *ngIf="formListaCompras.submitted && !novoItem" class="invalid-feedback">
+        O item não pode estar vazio.
+      </div>
+    </form>
+  
+    <h2>Itens Não Comprados</h2>
+    <ul>
+      <li *ngFor="let item of listaCompras; let i = index" 
+          [ngClass]="{ 'comprado': item.comprado }">
+        <span (click)="marcarComoComprado(i)" class="item-text">
+          {{ item.nome }}
+        </span>
+        <button class="btn btn-secondary" (click)="editarItem(i, item.nome)">Editar</button>
+        <button class="btn btn-danger" (click)="removerItem(i)">Remover</button>
+        
+        <div *ngIf="itemEditando === i">
+          <input 
+            type="text" 
+            [(ngModel)]="itemEditado" 
+            placeholder="Editar item..." 
+          />
+          <button class="btn btn-success" (click)="salvarEdicao(i)">Salvar</button>
+          <button class="btn btn-warning" (click)="cancelarEdicao()">Cancelar</button>
+        </div>
+      </li>
+    </ul>
+  
+    <h2>Itens Comprados</h2>
+    <ul>
+      <li *ngFor="let item of listaCompras; let i = index" 
+          *ngIf="item.comprado" 
+          [ngClass]="{ 'comprado': item.comprado }">
+        <span class="item-text">
+          {{ item.nome }}
+        </span>
+        <button class="btn btn-danger" (click)="removerItem(i)">Remover</button>
+      </li>
+    </ul>
+  </div>
+  
