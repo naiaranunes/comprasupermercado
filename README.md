@@ -1,1 +1,1 @@
-<h1>Lista de compras</h1>
+<h1>Lista de compras usando Angular</h1>
